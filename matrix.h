@@ -19,14 +19,17 @@ public:
 
     Matrix smallermatr(int cols, int rows);
     Matrix trans();
-    int deter();
+    double deter();
     int minor(int x,int y);
     void print();
     void setVal(int value, int col, int row);
     Matrix reverse();
     Matrix getMatrixWithoutRowAndCol(int row, int col);
-    int det(int size);
-    int cofactor(int col, int row);
+    double det(int size);
+    double cofactor(int col, int row);
+    double getValue(int x,int y);
+    int getRows(){return rows;}
+    int getCols(){return cols;}
 
 
     Matrix& operator=(const Matrix &m);
@@ -37,7 +40,7 @@ public:
     Vector operator*( Vector &v);
     bool operator==(const Matrix &m);
     bool operator!=(const Matrix &m);
-    int operator()(int x, int y);
+    double operator()(int x, int y);
 
 signals:
 

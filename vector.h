@@ -6,11 +6,11 @@
 class Vector
 {
 private:
-    int *val;
+    double *val;
     int size;
 public:
     Vector();
-    Vector(int *a, int s);
+    Vector(double *a, int s);
     Vector(const Vector &v);
     Vector(int s);
     Vector(int s, bool type);
@@ -20,14 +20,14 @@ public:
     double length();
     void print();
     int getSize();
-    void setVal(int index, int x);
+    void setVal(int index, double x);
 
     Vector& operator=(const Vector &v1);
     Vector operator+(const Vector &v1);
     Vector operator-(const Vector &v1);
-    Vector operator*(int x);
+    Vector operator*(double x);
     Vector operator*(const Vector &v1);
-    int operator[](int x);
+    double operator[](int x);
 
 signals:
 

@@ -1,4 +1,4 @@
-QT -= gui
+QT += gui testlib
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         matrix.cpp \
+        test.cpp \
         vector.cpp
 
 # Default rules for deployment.
@@ -26,4 +27,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     matrix.h \
+    test.h \
     vector.h

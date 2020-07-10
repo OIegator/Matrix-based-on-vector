@@ -4,18 +4,18 @@
 Vector::Vector()
 {
     this->size=0;
-    this->val=new int[0];
+    this->val=new double[0];
 }
 
 Vector::Vector(int s){
     this->size=s;
-    this->val=new int[s];
+    this->val=new double[s];
 }
 
 Vector::Vector(int s, bool type)
 {
     this->size=s;
-    this->val=new int[s];
+    this->val=new double[s];
     if(type) {
         for(int i=0;i<s;i++) {
             this->val[i]=1;
@@ -32,9 +32,9 @@ Vector::~Vector()
     delete [] val;
 }
 
-Vector::Vector(int *a, int s){
+Vector::Vector(double *a, int s){
     this->size=s;
-    this->val=new int[s];
+    this->val=new double[s];
     for (int i=0;i<s;i++){
         this->val[i]=a[i];
     }
@@ -43,7 +43,7 @@ Vector::Vector(int *a, int s){
 
 Vector::Vector(const Vector &v){
     this->size=v.size;
-    this->val=new int[v.size];
+    this->val=new double[v.size];
     for(int i=0;i<v.size;i++){
         this->val[i]=v.val[i];
     }
@@ -62,7 +62,7 @@ int Vector::getSize(){
     return this->size;
 }
 
-void Vector::setVal(int index, int x){
+void Vector::setVal(int index, double x){
     this->val[index] = x;
 }
 
@@ -72,7 +72,7 @@ Vector& Vector::operator = (const Vector &v1)
 
    size = v1.size;
 
-   val = new int[size];
+   val = new double[size];
 
    std::copy(v1.val, v1.val + v1.size, val);
 
@@ -101,7 +101,7 @@ Vector Vector::operator-(const Vector &v1){
     return c;
 }
 
-Vector Vector::operator*(int x){
+Vector Vector::operator*(double x){
     for (int i = 0; i < size; ++i) {
             val[i] = val[i] * x;
         }
@@ -115,7 +115,7 @@ Vector Vector::operator*(const Vector &v1){
    return result;
 }
 
-int Vector::operator[](int x){
+double Vector::operator[](int x){
     if (x>this->size){
         qWarning("Invalid index. Vector is shorter");
     }

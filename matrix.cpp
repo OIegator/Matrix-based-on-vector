@@ -128,7 +128,7 @@ Matrix Matrix::getMatrixWithoutRowAndCol(int row, int col)
     return newMatrix;
 }
 
-int Matrix::det(int size)
+double Matrix::det(int size)
 {
     int det = 0;
     int degree = 1; // (-1)^(1+j) из формулы определителя
@@ -164,7 +164,7 @@ int Matrix::det(int size)
     return det;
 }
 
-int Matrix::cofactor(int col, int row)
+double Matrix::cofactor(int col, int row)
 {
     return pow(-1, row + col)*this->getMatrixWithoutRowAndCol(row, col).det(this->rows-1);
 }
@@ -259,6 +259,6 @@ bool Matrix::operator!=(const Matrix &m){
     return false;
 }
 
-int Matrix::operator()(int x, int y){
+double Matrix::operator()(int x, int y){
     return v[x][y];
 }
