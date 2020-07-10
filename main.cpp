@@ -72,12 +72,20 @@ int main(int argc, char *argv[])
     vec = vecz;
 
     Matrix newM(arr2, 3, 3);
-    newM.setVal(5,2,2);
-    newM.setVal(4,1,1);
+    newM.setVal(2,0,0);
+    newM.setVal(6,0,1);
+    newM.setVal(5,0,2);
+    newM.setVal(5,1,0);
+    newM.setVal(3,1,1);
+    newM.setVal(-2,1,2);
+    newM.setVal(7,2,0);
+    newM.setVal(4,2,1);
+    newM.setVal(-3,2,2);
     Matrix newMM(arr3, 3, 3);
 
     newM.print();
     newMM.print();
+
 
 //    newMM = newM.getMatrixWithoutRowAndCol(0,0);
 //       newMM.print();
@@ -93,9 +101,7 @@ int main(int argc, char *argv[])
 
 
     out << newM.cofactor(0,0) << Qt::endl;
-    newM.getMatrixWithoutRowAndCol(0,0).print();
-    newM.print();
-    out<<"Олег Лох"<<Qt::endl;
+    newM.trans().print();
 
     return 0;
 }

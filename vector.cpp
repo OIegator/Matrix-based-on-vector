@@ -81,7 +81,7 @@ Vector& Vector::operator = (const Vector &v1)
 
 Vector Vector::operator+(const Vector &v1){
     if (size!=v1.size){
-
+        qWarning("Invalid index");
     }
     Vector c(v1.size);
     for (int i = 0; i < size; ++i) {
@@ -92,7 +92,7 @@ Vector Vector::operator+(const Vector &v1){
 
 Vector Vector::operator-(const Vector &v1){
     if (size!=v1.size){
-
+        qWarning("Invalid index");
     }
     Vector c(v1.size);
     for (int i = 0; i < size; ++i) {
@@ -117,10 +117,10 @@ Vector Vector::operator*(const Vector &v1){
 
 int Vector::operator[](int x){
     if (x>this->size){
-
+        qWarning("Invalid index. Vector is shorter");
     }
     if (x<0){
-
+        qWarning("Invalid index");
     }
     return this->val[x];
 }
@@ -128,7 +128,7 @@ int Vector::operator[](int x){
 void Vector::print(){
     QTextStream out(stdout);
     for (int i=0;i<size;i++){
-        out << val[i] << " ";
+        out << val[i] << "\t";
     }
     out << Qt::endl;
 }

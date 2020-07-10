@@ -46,9 +46,12 @@ Matrix Matrix::smallermatr(int cols, int rows){
 
 Matrix Matrix::trans(){
     Matrix c(this->cols,this->rows);
+    for(int i=0; i < c.rows; i++) {
+       c.v[i] = Vector(c.cols, 0);
+    }
     for (int i=0;i<rows;i++){
-        for (int j=i+1;j<cols;j++){
-           c.v[i].setVal(j,this->v[j][i]);
+        for (int j=0;j<cols;j++){
+           c.v[j].setVal(i,this->v[i][j]);
         }
     }
     return c;
@@ -64,6 +67,30 @@ void Matrix::print()
 void Matrix::setVal(int value, int col, int row)
 {
     v[row].setVal(col,value);
+}
+
+Matrix Matrix::reverse()
+{
+    Matrix reversed(cols, rows);
+    for(int i=0; i < reversed.rows; i++) {
+       reversed.v[i] = Vector(reversed.cols, 0);
+    }
+    int deter = this->det(this->rows);
+    if(deter){
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < rows; j++){
+                int m = rows - 1;
+                Matrix temp(m, m);
+                for(int k = 0; k < m; k++)
+                    temp.v[k] = Vector(m, 0);;
+                temp = this->getMatrixWithoutRowAndCol(i,j);
+                reversed.v[i].setVal(j, pow(-1, i + j + 2) * temp.det(m) / deter);
+            }
+        }
+    } else {
+        qWarning("The matrix is not square");
+    }
+    return reversed;
 }
 
 Matrix Matrix::getMatrixWithoutRowAndCol(int row, int col)
