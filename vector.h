@@ -28,9 +28,6 @@ public:
     Vector operator*(int x);
     Vector operator*(const Vector &v1);
     int operator[](int x);
-
-signals:
-
 };
 
 #endif // VECTOR_H

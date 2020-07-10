@@ -15,13 +15,14 @@ public:
     Matrix();
     Matrix(Vector *v,int cols,int rows);
     Matrix(int cols,int rows);
+    Matrix(int cols,int rows, bool type);
     Matrix(Matrix &m);
 
     Matrix smallermatr(int cols, int rows);
     Matrix trans();
-    int deter();
     int minor(int x,int y);
     void print();
+    int getCol();
     void setVal(int value, int col, int row);
     Matrix reverse();
     Matrix getMatrixWithoutRowAndCol(int row, int col);
@@ -38,9 +39,6 @@ public:
     Matrix operator==(const Matrix &m);
     Matrix operator!=(const Matrix &m);
     int operator[](int x);
-
-signals:
-
 };
 
 #endif // MATRIX_H
