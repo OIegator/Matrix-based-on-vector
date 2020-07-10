@@ -23,6 +23,15 @@ Matrix::Matrix(int rows,int cols)
     v=new Vector[rows];
 }
 
+Matrix::Matrix(Matrix &m){
+    this->rows=m.rows;
+    this->cols=m.cols;
+    this->v=new Vector[rows];
+    for (int i=0;i<rows;i++){
+        this->v[i]=m.v[i];
+    }
+}
+
 Matrix Matrix::smallermatr(int cols, int rows){
     Matrix c(cols,rows);
     for (int i=0;i<rows;i++){
@@ -147,4 +156,58 @@ Matrix &Matrix::operator=(const Matrix &m)
     }
 
     return *this;
+}
+
+Matrix Matrix::operator+(const Matrix &m){
+    if (rows!=m.rows && cols!=m.cols)
+        qWarning("");
+    Matrix c(m.rows,m.cols);
+    for (int i=0;i<rows;i++)
+        for (int j=0;j<cols;j++)
+            c.v[i].setVal(j,v[i][j]+m.v[i][j]);
+    return c;
+}
+
+Matrix Matrix::operator-(const Matrix &m){
+    if (rows!=m.rows && cols!=m.cols)
+        qWarning("");
+    Matrix c(m.rows,m.cols);
+    for (int i=0;i<rows;i++)
+        for (int j=0;j<cols;j++)
+            c.v[i].setVal(j,v[i][j]-m.v[i][j]);
+    return c;
+}
+
+Matrix Matrix::operator*(int x){
+    Matrix c(rows,cols);
+    for (int i=0;i<rows;i++)
+        for (int j=0;j<cols;j++)
+            c.v[i].setVal(j,v[i][j]*x);
+    return c;
+}
+
+Matrix Matrix::operator*(const Matrix &m){
+    if (cols!=m.cols){//??????????????
+
+    }
+    Matrix c(rows,cols);
+    for (int i=0; i<rows; i++)
+        for (int j=0; j<cols; j++){
+            int s=0;
+            for (int k=0; k<cols; k++)
+               s+=v[i][k]*m.v[k][j];
+            c.v[i].setVal(j,s);
+        }
+    return c;
+}
+
+Vector Matrix::operator*(Vector &v){
+    Vector v1(v.getSize());
+    for (int i=0; i<v.getSize(); i++){
+        int s=0;
+        for (int j=0; j<cols; j++)
+            s+=this->v[j][i]*v[j];
+        v1.setVal(i,s);
+    }
+    return v1;
 }

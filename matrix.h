@@ -15,6 +15,7 @@ public:
     Matrix();
     Matrix(Vector *v,int cols,int rows);
     Matrix(int cols,int rows);
+    Matrix(Matrix &m);
 
     Matrix smallermatr(int cols, int rows);
     Matrix trans();
@@ -32,7 +33,7 @@ public:
     Matrix operator-(const Matrix &m);
     Matrix operator*(int x);
     Matrix operator*(const Matrix &m);
-    Matrix operator+(const Vector &v);
+    Vector operator*( Vector &v);
     Matrix operator==(const Matrix &m);
     Matrix operator!=(const Matrix &m);
     int operator[](int x);
