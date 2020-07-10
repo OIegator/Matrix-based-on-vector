@@ -37,9 +37,12 @@ Matrix Matrix::smallermatr(int cols, int rows){
 
 Matrix Matrix::trans(){
     Matrix c(this->cols,this->rows);
+    for(int i=0; i < c.rows; i++) {
+       c.v[i] = Vector(c.cols, 0);
+    }
     for (int i=0;i<rows;i++){
-        for (int j=i+1;j<cols;j++){
-           c.v[i].setVal(j,this->v[j][i]);
+        for (int j=0;j<cols;j++){
+           c.v[j].setVal(i,this->v[i][j]);
         }
     }
     return c;

@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
 
     out << newM.cofactor(0,0) << Qt::endl;
-    newM.reverse().print();
+    newM.trans().print();
 
     return 0;
 }
