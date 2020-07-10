@@ -238,3 +238,27 @@ Vector Matrix::operator*(Vector &v){
     }
     return v1;
 }
+
+bool Matrix::operator==(const Matrix &m){
+    if (rows!=m.rows && cols!=m.cols)
+        return false;
+    for (int i=0; i<rows; i++)
+        for (int j=0; j<cols; j++)
+            if (v[i][j]!=m.v[i][j])
+                return false;
+    return true;
+}
+
+bool Matrix::operator!=(const Matrix &m){
+    if (rows!=m.rows && cols!=m.cols)
+        return true;
+    for (int i=0; i<rows; i++)
+        for (int j=0; j<cols; j++)
+            if (v[i][j]!=m.v[i][j])
+                return true;
+    return false;
+}
+
+int Matrix::operator()(int x, int y){
+    return v[x][y];
+}
