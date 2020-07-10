@@ -51,7 +51,7 @@ Matrix::Matrix(Matrix &m){
 Matrix Matrix::smallermatr(int cols, int rows){
     Matrix c(cols,rows);
     for (int i=0;i<rows;i++){
-        int *v1=new int[cols];
+        double *v1 = new double[cols];
         for (int j=0;j<cols;j++)
             v1[j]=this->v[i][j];
         Vector d(v1,cols);
@@ -83,7 +83,7 @@ int Matrix::getCol()
     return cols;
 }
 
-void Matrix::setVal(int value, int col, int row)
+void Matrix::setVal(double value, int col, int row)
 {
     v[row].setVal(col,value);
 }
@@ -258,7 +258,7 @@ bool Matrix::operator==(const Matrix &m){
         return false;
     for (int i=0; i<rows; i++)
         for (int j=0; j<cols; j++)
-            if (v[i][j]!=m.v[i][j])
+            if (v[i][j] - m.v[i][j] > 1E-10)
                 return false;
     return true;
 }

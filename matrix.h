@@ -23,7 +23,7 @@ public:
     int minor(int x,int y);
     void print();
     int getCol();
-    void setVal(int value, int col, int row);
+    void setVal(double value, int col, int row);
     Matrix reverse();
     Matrix getMatrixWithoutRowAndCol(int row, int col);
     int det(int size);
@@ -39,9 +39,6 @@ public:
     bool operator==(const Matrix &m);
     bool operator!=(const Matrix &m);
     int operator()(int x, int y);
-
-signals:
-
 };
 
 #endif // MATRIX_H

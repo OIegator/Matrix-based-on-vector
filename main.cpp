@@ -18,24 +18,7 @@ void printMenu() {
     out << "    - 8. Get matrix determinant." << Qt::endl;
     out << "    - 9. Get cofactor of matrix element." << Qt::endl;
     out << "    - 10. Get reversed matrix." << Qt::endl;
-    out << "    - 3. Exit.\n" << Qt::endl;
-}
-
-int getOption(int count) {
-    int option;
-    QString s;
-    s = in.readLine();
-    QTextStream sstream(&s);
-    sstream >> option;
-
-    while (option < 1 || option > count) {
-        out << "Incorrect input. Try again: ";
-        s = in.readLine();
-        QTextStream sstream(&s);
-        sstream >> option;
-    }
-
-    return option;
+    out << "    - 0. Exit.\n" << Qt::endl;
 }
 
 int main(int argc, char *argv[])
@@ -45,8 +28,8 @@ int main(int argc, char *argv[])
     int option;
     int n=4;
     int c=4;
-    int *b=new int[n];
-    int *d=new int[c];
+    double *b=new double[n];
+    double *d=new double[c];
     for (int i=0;i<n;i++){
         b[i]=i+1;
     }
@@ -205,9 +188,9 @@ int main(int argc, char *argv[])
             currentMatrix.reverse().print();
         }
 
-        if(option != 3)
+        if(option != 0)
             system("pause");
-    } while (option != 3);
+    } while (option != 0);
 
     return 0;
 }
