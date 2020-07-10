@@ -92,9 +92,9 @@ int main(int argc, char *argv[])
 //       out << "//////////" << Qt::endl;
 
 
-    out << newM.det(3) << Qt::endl;
-    newM.setVal(1,2,2);
-    newMM.print();
+    out << newM.cofactor(0,0) << Qt::endl;
+    newM.getMatrixWithoutRowAndCol(0,0).print();
+    newM.print();
 
     return 0;
 }

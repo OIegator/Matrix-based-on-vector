@@ -128,6 +128,11 @@ int Matrix::det(int size)
     return det;
 }
 
+int Matrix::cofactor(int col, int row)
+{
+    return pow(-1, row + col)*this->getMatrixWithoutRowAndCol(row, col).det(this->rows-1);
+}
+
 Matrix &Matrix::operator=(const Matrix &m)
 {
     delete [] v;
