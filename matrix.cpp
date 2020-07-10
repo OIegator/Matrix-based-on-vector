@@ -57,6 +57,30 @@ void Matrix::setVal(int value, int col, int row)
     v[row].setVal(col,value);
 }
 
+Matrix Matrix::reverse()
+{
+    Matrix reversed(cols, rows);
+    for(int i=0; i < reversed.rows; i++) {
+       reversed.v[i] = Vector(reversed.cols, 0);
+    }
+    int deter = this->det(this->rows);
+    if(deter){
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < rows; j++){
+                int m = rows - 1;
+                Matrix temp(m, m);
+                for(int k = 0; k < m; k++)
+                    temp.v[k] = Vector(m, 0);;
+                temp = this->getMatrixWithoutRowAndCol(i,j);
+                reversed.v[i].setVal(j, pow(-1, i + j + 2) * temp.det(m) / deter);
+            }
+        }
+    } else {
+        qWarning("The matrix is not square");
+    }
+    return reversed;
+}
+
 Matrix Matrix::getMatrixWithoutRowAndCol(int row, int col)
 {
     Matrix newMatrix(this->cols-1, this->rows-1);
