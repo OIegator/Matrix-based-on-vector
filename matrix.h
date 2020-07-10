@@ -36,9 +36,12 @@ public:
     Matrix operator*(int x);
     Matrix operator*(const Matrix &m);
     Vector operator*( Vector &v);
-    Matrix operator==(const Matrix &m);
-    Matrix operator!=(const Matrix &m);
-    int operator[](int x);
+    bool operator==(const Matrix &m);
+    bool operator!=(const Matrix &m);
+    int operator()(int x, int y);
+
+signals:
+
 };
 
 #endif // MATRIX_H
