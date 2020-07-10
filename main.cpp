@@ -95,6 +95,7 @@ int main(int argc, char *argv[])
     out << newM.cofactor(0,0) << Qt::endl;
     newM.getMatrixWithoutRowAndCol(0,0).print();
     newM.print();
+    out<<"Олег Лох"<<Qt::endl;
 
     return 0;
 }
