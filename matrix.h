@@ -15,14 +15,17 @@ public:
     Matrix();
     Matrix(Vector *v,int cols,int rows);
     Matrix(int cols,int rows);
+    Matrix(int cols,int rows, bool type);
     Matrix(Matrix &m);
 
     Matrix smallermatr(int cols, int rows);
     Matrix trans();
+
     double deter();
     int minor(int x,int y);
     void print();
-    void setVal(int value, int col, int row);
+    int getCol();
+    void setVal(double value, int col, int row);
     Matrix reverse();
     Matrix getMatrixWithoutRowAndCol(int row, int col);
     double det(int size);
@@ -42,7 +45,6 @@ public:
     bool operator!=(const Matrix &m);
     double operator()(int x, int y);
 
-signals:
 
 };
 

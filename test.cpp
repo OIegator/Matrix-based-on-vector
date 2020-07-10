@@ -76,4 +76,41 @@ void Test::test_smaller(){
               QCOMPARE(n(i,j),m(i,j));
 }
 
+void Test::test_rev(){
+
+}
+
+void Test::test_operators(){
+    double *a,*b,*c;
+    a[0]=1;a[1]=2;a[2]=3;
+    b[0]=4;b[1]=5;b[2]=6;
+    c[0]=7;c[1]=8;c[2]=9;
+    Vector v1(a,3),v2(b,3),v3(c,3);
+    Vector *v;
+    v[0]=v1;v[1]=v2;v[2]=v3;
+    Matrix m(v,3,3);
+    double *d,*e,*f;
+    d[0]=1;d[1]=1;d[2]=1;
+    e[0]=1;e[1]=1;e[2]=1;
+    f[0]=1;f[1]=1;f[2]=1;
+    Vector v4(d,3),v5(e,3),v6(f,3);
+    Vector *V;
+    V[0]=v4;V[1]=v5;V[2]=v6;
+    Matrix t(V,3,3);
+    Matrix n;
+    n=m+t;
+    for (int i=0;i<3;i++)
+        for (int j=0;j<3;j++)
+              QCOMPARE(n(i,j),m(i,j)+1);
+    n=m-t;
+    for (int i=0;i<3;i++)
+        for (int j=0;j<3;j++)
+              QCOMPARE(n(i,j),m(i,j));
+    n=m*2;
+    for (int i=0;i<3;i++)
+        for (int j=0;j<3;j++)
+              QCOMPARE(n(i,j),2*m(i,j));
+
+}
+
 
