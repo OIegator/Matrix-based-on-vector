@@ -23,6 +23,22 @@ Matrix::Matrix(int rows,int cols)
     v=new Vector[rows];
 }
 
+Matrix::Matrix(int cols, int rows, bool type)
+{
+    this->rows=rows;
+    this->cols=cols;
+    v = new Vector[rows];
+    if(type) {
+        for(int i=0; i < this->rows; i++) {
+           this->v[i] = Vector(this->cols, 1);
+        }
+    } else {
+        for(int i=0; i < this->rows; i++) {
+           this->v[i] = Vector(this->cols, 0);
+        }
+    }
+}
+
 Matrix::Matrix(Matrix &m){
     this->rows=m.rows;
     this->cols=m.cols;
@@ -35,7 +51,7 @@ Matrix::Matrix(Matrix &m){
 Matrix Matrix::smallermatr(int cols, int rows){
     Matrix c(cols,rows);
     for (int i=0;i<rows;i++){
-        int *v1=new int[cols];
+        double *v1 = new double[cols];
         for (int j=0;j<cols;j++)
             v1[j]=this->v[i][j];
         Vector d(v1,cols);
@@ -45,10 +61,8 @@ Matrix Matrix::smallermatr(int cols, int rows){
 }
 
 Matrix Matrix::trans(){
-    Matrix c(this->cols,this->rows);
-    for(int i=0; i < c.rows; i++) {
-       c.v[i] = Vector(c.cols, 0);
-    }
+    Matrix c(this->cols,this->rows, 0);
+
     for (int i=0;i<rows;i++){
         for (int j=0;j<cols;j++){
            c.v[j].setVal(i,this->v[i][j]);
@@ -64,17 +78,20 @@ void Matrix::print()
     }
 }
 
-void Matrix::setVal(int value, int col, int row)
+int Matrix::getCol()
+{
+    return cols;
+}
+
+void Matrix::setVal(double value, int col, int row)
 {
     v[row].setVal(col,value);
 }
 
 Matrix Matrix::reverse()
 {
-    Matrix reversed(cols, rows);
-    for(int i=0; i < reversed.rows; i++) {
-       reversed.v[i] = Vector(reversed.cols, 0);
-    }
+    Matrix reversed(cols, rows, 0);
+
     int deter = this->det(this->rows);
     if(deter){
         for(int i = 0; i < rows; i++){
@@ -87,6 +104,7 @@ Matrix Matrix::reverse()
                 reversed.v[i].setVal(j, pow(-1, i + j + 2) * temp.det(m) / deter);
             }
         }
+        reversed = reversed.trans();
     } else {
         qWarning("The matrix is not square");
     }
@@ -95,15 +113,11 @@ Matrix Matrix::reverse()
 
 Matrix Matrix::getMatrixWithoutRowAndCol(int row, int col)
 {
-    Matrix newMatrix(this->cols-1, this->rows-1);
+    Matrix newMatrix(this->cols-1, this->rows-1, 0);
 
     if(this->cols != this->rows) {
         qWarning("The matrix is not square");
         return newMatrix;
-    }
-
-    for(int i=0; i < newMatrix.rows; i++) {
-       newMatrix.v[i] = Vector(newMatrix.cols, 0);
     }
 
     int offsetRow = 0; //Смещение индекса строки в матрице
@@ -187,7 +201,7 @@ Matrix &Matrix::operator=(const Matrix &m)
 
 Matrix Matrix::operator+(const Matrix &m){
     if (rows!=m.rows && cols!=m.cols)
-        qWarning("");
+        qWarning("Invalid dimension of matrices");
     Matrix c(m.rows,m.cols);
     for (int i=0;i<rows;i++)
         for (int j=0;j<cols;j++)
@@ -197,7 +211,7 @@ Matrix Matrix::operator+(const Matrix &m){
 
 Matrix Matrix::operator-(const Matrix &m){
     if (rows!=m.rows && cols!=m.cols)
-        qWarning("");
+        qWarning("Invalid dimension of matrices");
     Matrix c(m.rows,m.cols);
     for (int i=0;i<rows;i++)
         for (int j=0;j<cols;j++)
@@ -214,8 +228,8 @@ Matrix Matrix::operator*(int x){
 }
 
 Matrix Matrix::operator*(const Matrix &m){
-    if (cols!=m.cols){//??????????????
-
+    if (cols!=m.cols){
+        qWarning("Invalid dimension of matrices");
     }
     Matrix c(rows,cols);
     for (int i=0; i<rows; i++)
@@ -244,7 +258,7 @@ bool Matrix::operator==(const Matrix &m){
         return false;
     for (int i=0; i<rows; i++)
         for (int j=0; j<cols; j++)
-            if (v[i][j]!=m.v[i][j])
+            if (v[i][j] - m.v[i][j] > 1E-10)
                 return false;
     return true;
 }

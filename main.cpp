@@ -3,15 +3,33 @@
 #include "matrix.h"
 #include <QTextStream>
 
+QTextStream out(stdout);
+QTextStream in(stdin);
+
+void printMenu() {
+    system("cls");
+    out << "  What do you want to do?" << Qt::endl;
+    out << "    - 1. Enter new matrix." << Qt::endl;
+    out << "    - 2. Print current matrix." << Qt::endl;
+    out << "    - 4. Initialize zeros matrix." << Qt::endl;
+    out << "    - 5. Initialize ones matrix." << Qt::endl;
+    out << "    - 6. Get a sub-matrix." << Qt::endl;
+    out << "    - 7. Get trunsposed matrix." << Qt::endl;
+    out << "    - 8. Get matrix determinant." << Qt::endl;
+    out << "    - 9. Get cofactor of matrix element." << Qt::endl;
+    out << "    - 10. Get reversed matrix." << Qt::endl;
+    out << "    - 0. Exit.\n" << Qt::endl;
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QTextStream out(stdout);
+    int option;
     int n=4;
     int c=4;
-    int *b=new int[n];
-    int *d=new int[c];
+    double *b=new double[n];
+    double *d=new double[c];
     for (int i=0;i<n;i++){
         b[i]=i+1;
     }
@@ -71,19 +89,19 @@ int main(int argc, char *argv[])
     arr3[2] = vecz;
     vec = vecz;
 
-    Matrix newM(arr2, 3, 3);
-    newM.setVal(2,0,0);
-    newM.setVal(6,0,1);
-    newM.setVal(5,0,2);
-    newM.setVal(5,1,0);
-    newM.setVal(3,1,1);
-    newM.setVal(-2,1,2);
-    newM.setVal(7,2,0);
-    newM.setVal(4,2,1);
-    newM.setVal(-3,2,2);
+    Matrix currentMatrix(arr2, 3, 3);
+    currentMatrix.setVal(2,0,0);
+    currentMatrix.setVal(6,0,1);
+    currentMatrix.setVal(5,0,2);
+    currentMatrix.setVal(5,1,0);
+    currentMatrix.setVal(3,1,1);
+    currentMatrix.setVal(-2,1,2);
+    currentMatrix.setVal(7,2,0);
+    currentMatrix.setVal(4,2,1);
+    currentMatrix.setVal(-3,2,2);
     Matrix newMM(arr3, 3, 3);
 
-    newM.print();
+    currentMatrix.print();
     newMM.print();
 
 
@@ -100,8 +118,79 @@ int main(int argc, char *argv[])
 //       out << "//////////" << Qt::endl;
 
 
-    out << newM.cofactor(0,0) << Qt::endl;
-    newM.trans().print();
+    out << currentMatrix.cofactor(0,0) << Qt::endl;
+    Matrix zer(3,3,1);
+    zer.print();
+    currentMatrix.smallermatr(2,1).print();
+
+    do {
+        printMenu();
+
+        int n = 0;
+        int m = 0;
+        in >> option;
+
+        switch (option) {
+        case 1:
+            out << Qt::endl;
+            out << "Item 1" << Qt::endl;
+            break;
+
+        case 2:
+            out << Qt::endl;
+            currentMatrix.print();
+            break;
+
+        case 4: {
+            out << Qt::endl;
+            out << "Enter martrix dimensions: " << Qt::endl;
+            in >> n >> m;
+            Matrix zeros(n, m, 0);
+            out << Qt::endl;
+            zeros.print();
+        }
+            break;
+
+        case 5: {
+            out << Qt::endl;
+            out << "Enter martrix dimensions: " << Qt::endl;
+            in >> n >> m;
+            Matrix ones(n, m, 1);
+            out << Qt::endl;
+            ones.print();
+        }
+            break;
+        case 6: {
+            out << Qt::endl;
+            out << "Enter sub-matrix martrix dimensions: " << Qt::endl;
+            in >> n >> m;
+            out << Qt::endl;
+            currentMatrix.smallermatr(n,m).print();
+        }
+            break;
+        case 7:
+            out << Qt::endl;
+            currentMatrix.trans().print();
+            break;
+        case 8:
+            out << Qt::endl;
+            out << currentMatrix.det(currentMatrix.getCol()) << Qt::endl;
+            break;
+        case 9: {
+            out << Qt::endl;
+            out << "Enter coordinates martrix element: " << Qt::endl;
+            in >> n >> m;
+            out << currentMatrix.cofactor(n, m) << Qt::endl;
+        }
+            break;
+        case 10:
+            out << Qt::endl;
+            currentMatrix.reverse().print();
+        }
+
+        if(option != 0)
+            system("pause");
+    } while (option != 0);
 
     return 0;
 }
