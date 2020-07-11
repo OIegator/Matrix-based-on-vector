@@ -219,7 +219,7 @@ Matrix Matrix::operator-(const Matrix &m){
     return c;
 }
 
-Matrix Matrix::operator*(int x){
+Matrix Matrix::operator*(double x){
     Matrix c(rows,cols);
     for (int i=0;i<rows;i++)
         for (int j=0;j<cols;j++)

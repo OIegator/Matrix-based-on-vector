@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-QT += gui testlib
-=======
-QT += gui core
->>>>>>> 2cb838141cf70183904a83328c8cb5559b3ed7d1
+
+QT += gui testlib core
 
 CONFIG += c++11 console
 CONFIG -= app_bundle

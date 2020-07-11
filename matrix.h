@@ -38,7 +38,7 @@ public:
     Matrix& operator=(const Matrix &m);
     Matrix operator+(const Matrix &m);
     Matrix operator-(const Matrix &m);
-    Matrix operator*(int x);
+    Matrix operator*(double x);
     Matrix operator*(const Matrix &m);
     Vector operator*( Vector &v);
     bool operator==(const Matrix &m);
