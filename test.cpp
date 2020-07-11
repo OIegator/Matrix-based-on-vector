@@ -3,10 +3,6 @@
 
 Test::Test(QObject *parent) : QObject(parent) { }
 
-void Test::constr(){
-
-}
-
 void Test::test_det(){
     double *a=new double[3],*b=new double[3],*c=new double[3];
     a[0]=1;a[1]=2;a[2]=3;
@@ -29,7 +25,7 @@ void Test::test_trans(){
     v[0]=v1;v[1]=v2;v[2]=v3;
     Matrix m(v,3,3);
     Matrix n;
-    n=m.reverse();
+    n=m.trans();
     double *d=new double[3],*e=new double[3],*f=new double[3];
     d[0]=1;d[1]=4;d[2]=7;
     e[0]=2;e[1]=5;e[2]=8;
@@ -96,10 +92,12 @@ void Test::test_operators(){
     Matrix t(V,3,3);
     Matrix n;
     n=m+t;
+
     for (int i=0;i<3;i++)
         for (int j=0;j<3;j++)
               QCOMPARE(n(i,j),m(i,j)+1);
-    n=m-t;
+    n=n-t;
+
     for (int i=0;i<3;i++)
         for (int j=0;j<3;j++)
               QCOMPARE(n(i,j),m(i,j));
@@ -116,18 +114,18 @@ void Test::test_operators(){
     Matrix t1(V1,3,3);
     n=m*t1;
     v7.setVal(0,4); v7.setVal(1,5); v7.setVal(2,4);
-    v8.setVal(0,10); v7.setVal(1,11); v7.setVal(2,10);
-    v7.setVal(0,16); v7.setVal(1,17); v7.setVal(2,16);
+    v8.setVal(0,10); v8.setVal(1,11); v8.setVal(2,10);
+    v9.setVal(0,16); v9.setVal(1,17); v9.setVal(2,16);
     Vector *V2=new Vector[3];
     V2[0]=v7;V2[1]=v8;V2[2]=v9;
     Matrix t2(V2,3,3);
+     n.print();
     for (int i=0;i<3;i++)
         for (int j=0;j<3;j++)
               QCOMPARE(n(i,j),t2(i,j));
     QCOMPARE(m==n,false);
     QCOMPARE(m!=n,true);
-
-
+    QCOMPARE(m(0,0),1);
 }
 
 

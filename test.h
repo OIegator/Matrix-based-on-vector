@@ -10,10 +10,6 @@ class Test: public QObject
 public:
     explicit Test(QObject *parent = nullptr);
 private slots:
-    void constr();
-    void constrv();
-    void constrrc();
-    void constrm();
 
     void test_smaller();
     void test_det();

@@ -40,7 +40,7 @@ public:
     Matrix operator-(const Matrix &m);
     Matrix operator*(double x);
     Matrix operator*(const Matrix &m);
-    Vector operator*( Vector &v);
+    Matrix operator*( Vector &v);
     bool operator==(const Matrix &m);
     bool operator!=(const Matrix &m);
     double operator()(int x, int y);
