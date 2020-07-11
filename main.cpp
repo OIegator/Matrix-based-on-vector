@@ -1,3 +1,4 @@
+
 #include <QCoreApplication>
 #include "vector.h"
 #include "matrix.h"
@@ -18,7 +19,9 @@ void printMenu() {
     out << "    - 8. Get matrix determinant." << Qt::endl;
     out << "    - 9. Get cofactor of matrix element." << Qt::endl;
     out << "    - 10. Get reversed matrix." << Qt::endl;
-    out << "    - 0. Exit.\n" << Qt::endl;
+    out << "    - 11. Multiply the current matrix by a number." << Qt::endl;
+    out << "    - 12. Multiply the current matrix by a vector." << Qt::endl;
+    out << "    - 0. EXIT.\n" << Qt::endl;
 }
 
 int main(int argc, char *argv[])
@@ -124,7 +127,10 @@ int main(int argc, char *argv[])
     currentMatrix.smallermatr(2,1).print();
 
     do {
+
         printMenu();
+        out << "-------Current matrix-------" << Qt::endl;
+        currentMatrix.print();
 
         int n = 0;
         int m = 0;
@@ -186,6 +192,23 @@ int main(int argc, char *argv[])
         case 10:
             out << Qt::endl;
             currentMatrix.reverse().print();
+            break;
+        case 11: {
+            out << Qt::endl;
+            out << "Enter the number to multiply the matrix by: " << Qt::endl;
+            in >> n;
+            Matrix temp(1, 1, 0);
+            temp = currentMatrix * n;
+            temp.print();
+        }
+        case 12: {
+            out << Qt::endl;
+            out << "Enter " << Qt::endl;
+            in >> n;
+            Matrix temp(1, 1, 0);
+            temp = currentMatrix * n;
+            temp.print();
+        }
         }
 
         if(option != 0)

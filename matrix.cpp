@@ -219,8 +219,8 @@ Matrix Matrix::operator-(const Matrix &m){
     return c;
 }
 
-Matrix Matrix::operator*(int x){
-    Matrix c(rows,cols);
+Matrix Matrix::operator*(double x){
+    Matrix c(rows,cols, 0);
     for (int i=0;i<rows;i++)
         for (int j=0;j<cols;j++)
             c.v[i].setVal(j,v[i][j]*x);
@@ -243,9 +243,9 @@ Matrix Matrix::operator*(const Matrix &m){
 }
 
 Vector Matrix::operator*(Vector &v){
-    Vector v1(v.getSize());
+    Vector v1(v.getSize(), 0);
     for (int i=0; i<v.getSize(); i++){
-        int s=0;
+        double s=0;
         for (int j=0; j<cols; j++)
             s+=this->v[j][i]*v[j];
         v1.setVal(i,s);

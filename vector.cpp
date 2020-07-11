@@ -128,7 +128,7 @@ double Vector::operator[](int x){
 void Vector::print(){
     QTextStream out(stdout);
     for (int i=0;i<size;i++){
-        out << val[i] << "\t";
+        out << "\t" << val[i];
     }
     out << Qt::endl;
 }
