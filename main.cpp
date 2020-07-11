@@ -1,4 +1,3 @@
-
 #include <QCoreApplication>
 #include "vector.h"
 #include "matrix.h"
@@ -129,7 +128,7 @@ int main(int argc, char *argv[])
     do {
 
         printMenu();
-        out << "-------Current matrix-------" << Qt::endl;
+        out << "  --------Current matrix--------" << Qt::endl;
         currentMatrix.print();
 
         int n = 0;
