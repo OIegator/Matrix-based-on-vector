@@ -78,11 +78,6 @@ void Matrix::print()
     }
 }
 
-int Matrix::getCol()
-{
-    return cols;
-}
-
 void Matrix::setVal(double value, int col, int row)
 {
     v[row].setVal(col,value);
@@ -202,7 +197,7 @@ Matrix &Matrix::operator=(const Matrix &m)
 Matrix Matrix::operator+(const Matrix &m){
     if (rows!=m.rows && cols!=m.cols)
         qWarning("Invalid dimension of matrices");
-    Matrix c(m.rows,m.cols);
+    Matrix c(m.rows,m.cols, 0);
     for (int i=0;i<rows;i++)
         for (int j=0;j<cols;j++)
             c.v[i].setVal(j,v[i][j]+m.v[i][j]);
@@ -212,7 +207,7 @@ Matrix Matrix::operator+(const Matrix &m){
 Matrix Matrix::operator-(const Matrix &m){
     if (rows!=m.rows && cols!=m.cols)
         qWarning("Invalid dimension of matrices");
-    Matrix c(m.rows,m.cols);
+    Matrix c(m.rows,m.cols, 0);
     for (int i=0;i<rows;i++)
         for (int j=0;j<cols;j++)
             c.v[i].setVal(j,v[i][j]-m.v[i][j]);
@@ -231,7 +226,7 @@ Matrix Matrix::operator*(const Matrix &m){
     if (cols!=m.cols){
         qWarning("Invalid dimension of matrices");
     }
-    Matrix c(rows,cols);
+    Matrix c(rows,cols, 0);
     for (int i=0; i<rows; i++)
         for (int j=0; j<cols; j++){
             int s=0;
@@ -242,15 +237,24 @@ Matrix Matrix::operator*(const Matrix &m){
     return c;
 }
 
-Vector Matrix::operator*(Vector &v){
-    Vector v1(v.getSize(), 0);
-    for (int i=0; i<v.getSize(); i++){
-        double s=0;
-        for (int j=0; j<cols; j++)
-            s+=this->v[j][i]*v[j];
-        v1.setVal(i,s);
+Matrix Matrix::operator*(Vector &v){
+    if(cols > 1) {
+        Matrix v1(1, v.getSize(), 0);
+        for (int i=0; i<rows; i++){
+            double s = 0.0;
+            for (int j=0; j<cols; j++)
+                s+=this->v[i][j] * v[j];
+            v1.setVal(s,0,i);
+        }
+        return v1;
     }
-    return v1;
+    Matrix v2(v.getSize(), rows, 0);
+    for(int i=0; i < rows; i++) {
+        for(int j=0; j < v.getSize(); j++) {
+            v2.setVal((this->v[i][0] * v[j]), j, i);
+        }
+    }
+    return v2;
 }
 
 bool Matrix::operator==(const Matrix &m){
@@ -275,4 +279,22 @@ bool Matrix::operator!=(const Matrix &m){
 
 double Matrix::operator()(int x, int y){
     return v[x][y];
+}
+
+QTextStream &operator>>(QTextStream&is, Matrix &m)
+{
+    QTextStream out(stdout);
+    out << "Enter count of rows and cols for matrix: " << Qt::endl;
+    is >> m.rows >> m.cols;
+    for(int i=0; i < m.rows; i++) {
+       out << "Enter " << m.cols << " element(s) for " << i + 1 << " row of matrix: " << Qt::endl;
+       Vector vr(m.cols,0);
+       QString s;
+       for(int j=0; j <m.cols; j++) {
+           is >> s;
+           vr.setVal(j,s.toDouble());
+       }
+       m.v[i] = vr;
+    }
+    return is;
 }

@@ -1,6 +1,8 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <QTextStream>
+#include <QString>
 #include "vector.h"
 #include "math.h"
 
@@ -24,7 +26,6 @@ public:
     double deter();
     int minor(int x,int y);
     void print();
-    int getCol();
     void setVal(double value, int col, int row);
     Matrix reverse();
     Matrix getMatrixWithoutRowAndCol(int row, int col);
@@ -40,11 +41,12 @@ public:
     Matrix operator-(const Matrix &m);
     Matrix operator*(double x);
     Matrix operator*(const Matrix &m);
-    Vector operator*( Vector &v);
+    Matrix operator*( Vector &v);
     bool operator==(const Matrix &m);
     bool operator!=(const Matrix &m);
     double operator()(int x, int y);
 
+    friend QTextStream& operator>> (QTextStream &is, Matrix &m);
 
 };
 
