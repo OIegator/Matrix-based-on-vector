@@ -27,6 +27,7 @@ public:
     Vector operator-(const Vector &v1);
     Vector operator*(double x);
     Vector operator*(const Vector &v1);
+
     double operator[](int x);
 
 signals:
