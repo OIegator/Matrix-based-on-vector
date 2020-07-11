@@ -47,6 +47,7 @@ public:
     double operator()(int x, int y);
 
     friend QTextStream& operator>> (QTextStream &is, Matrix &m);
+    friend QTextStream& operator<< (QTextStream &os, Matrix &m);
 
 };
 

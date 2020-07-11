@@ -281,16 +281,26 @@ double Matrix::operator()(int x, int y){
     return v[x][y];
 }
 
+QTextStream &operator<<(QTextStream &os, Matrix &m)
+{
+    for (int i=0;i<m.rows;i++){
+        m.v[i].print();
+    }
+    return os;
+}
+
 QTextStream &operator>>(QTextStream&is, Matrix &m)
 {
     QTextStream out(stdout);
     out << "Enter count of rows and cols for matrix: " << Qt::endl;
-    is >> m.rows >> m.cols;
+    int r,c;
+    is >> r >> c;
+    m = Matrix(r, c, 0);
     for(int i=0; i < m.rows; i++) {
        out << "Enter " << m.cols << " element(s) for " << i + 1 << " row of matrix: " << Qt::endl;
        Vector vr(m.cols,0);
        QString s;
-       for(int j=0; j <m.cols; j++) {
+       for(int j=0; j < m.cols; j++) {
            is >> s;
            vr.setVal(j,s.toDouble());
        }

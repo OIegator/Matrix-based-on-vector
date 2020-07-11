@@ -55,12 +55,12 @@ int main(int argc, char *argv[])
         switch (option) {
         case 1:
             out << Qt::endl;
-            out << "Item 1" << Qt::endl;
+            in >> currentMatrix;
             break;
 
         case 2:
             out << Qt::endl;
-            currentMatrix.print();
+            out << currentMatrix;
             break;
 
         case 3: {
