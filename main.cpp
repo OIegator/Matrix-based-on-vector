@@ -11,17 +11,19 @@ void printMenu() {
     system("cls");
     out << "  What do you want to do?" << Qt::endl;
     out << "    - 1. Enter new matrix." << Qt::endl;
-    out << "    - 2. Print current matrix." << Qt::endl;
-    out << "    - 3. Initialize zeros matrix." << Qt::endl;
-    out << "    - 4. Initialize ones matrix." << Qt::endl;
-    out << "    - 5. Get a sub-matrix." << Qt::endl;
-    out << "    - 6. Get trunsposed matrix." << Qt::endl;
-    out << "    - 7. Get matrix determinant." << Qt::endl;
-    out << "    - 8. Get cofactor of matrix element." << Qt::endl;
-    out << "    - 9. Get reversed matrix." << Qt::endl;
-    out << "    - 10. Multiply the current matrix by a number." << Qt::endl;
-    out << "    - 11. Multiply the current matrix by a vector." << Qt::endl;
-    out << "    - 12. Sum another matrix with the current one." << Qt::endl;
+    out << "    - 2. Initialize zeros matrix." << Qt::endl;
+    out << "    - 3. Initialize ones matrix." << Qt::endl;
+    out << "    - 4. Get a sub-matrix." << Qt::endl;
+    out << "    - 5. Get trunsposed matrix." << Qt::endl;
+    out << "    - 6. Get matrix determinant." << Qt::endl;
+    out << "    - 7. Get cofactor of matrix element." << Qt::endl;
+    out << "    - 8. Get reversed matrix." << Qt::endl;
+    out << "    - 9. Sum another matrix with the current one." << Qt::endl;
+    out << "    - 10. Subtract another matrix from the current one." << Qt::endl;
+    out << "    - 11. Multiply the current matrix by a number." << Qt::endl;
+    out << "    - 12. Multiply the current matrix by a vector." << Qt::endl;
+    out << "    - 13. Multiply the current matrix by a another matrix." << Qt::endl;
+    out << "    - 14. Run task." << Qt::endl;
     out << "    - 0. EXIT.\n" << Qt::endl;
 }
 
@@ -46,7 +48,7 @@ int main(int argc, char *argv[])
 
         printMenu();
         out << "  --------Current matrix--------" << Qt::endl;
-        currentMatrix.print();
+        out << currentMatrix;
 
         int n = 0;
         int m = 0;
@@ -58,66 +60,80 @@ int main(int argc, char *argv[])
             in >> currentMatrix;
             break;
 
-        case 2:
+        case 2: {
             out << Qt::endl;
-            out << currentMatrix;
+            out << "Enter martrix dimensions: " << Qt::endl;
+            in >> n >> m;
+            Matrix zeros(n, m, 0);
+            out << "  ------------Result------------" << Qt::endl;
+            out << zeros;
+        }
             break;
 
         case 3: {
             out << Qt::endl;
             out << "Enter martrix dimensions: " << Qt::endl;
             in >> n >> m;
-            Matrix zeros(n, m, 0);
-            out << Qt::endl;
-            zeros.print();
-        }
-            break;
-
-        case 4: {
-            out << Qt::endl;
-            out << "Enter martrix dimensions: " << Qt::endl;
-            in >> n >> m;
             Matrix ones(n, m, 1);
-            out << Qt::endl;
-            ones.print();
+            out << "  ------------Result------------" << Qt::endl;
+            out << ones;
         }
             break;
-        case 5: {
+        case 4: {
             out << Qt::endl;
             out << "Enter sub-matrix martrix dimensions: " << Qt::endl;
             in >> n >> m;
-            out << Qt::endl;
+            out << "  ------------Result------------" << Qt::endl;
             currentMatrix.smallermatr(n,m).print();
         }
             break;
-        case 6:
-            out << Qt::endl;
+        case 5:
+            out << "  ------------Result------------" << Qt::endl;
             currentMatrix.trans().print();
             break;
-        case 7:
+        case 6:
             out << Qt::endl;
-            out << currentMatrix.det(currentMatrix.getCols()) << Qt::endl;
+            out << "Determimant: " << currentMatrix.det(currentMatrix.getCols()) << Qt::endl;
             break;
-        case 8: {
+        case 7: {
             out << Qt::endl;
             out << "Enter coordinates martrix element: " << Qt::endl;
             in >> n >> m;
-            out << currentMatrix.cofactor(n, m) << Qt::endl;
+            out << "Cofactor: " << currentMatrix.cofactor(n, m) << Qt::endl;
         }
             break;
-        case 9:
+        case 8:
             out << Qt::endl;
             currentMatrix.reverse().print();
             break;
+        case 9: {
+            out << Qt::endl;
+            out << "Enter the matrix you want to sum with the current one: " << Qt::endl;
+            Matrix temp(currentMatrix.getCols(), currentMatrix.getRows(), 1);
+            in >> temp;
+            temp = currentMatrix + temp;
+            out << "  ------------Result------------" << Qt::endl;
+            temp.print();
+        }
         case 10: {
+            out << Qt::endl;
+            out << "Enter the matrix you want to subtract from the current one: " << Qt::endl;
+            Matrix temp(currentMatrix.getCols(), currentMatrix.getRows(), 1);
+            in >> temp;
+            temp = currentMatrix - temp;
+            out << "  ------------Result------------" << Qt::endl;
+            temp.print();
+        }
+        case 11: {
             out << Qt::endl;
             out << "Enter the number to multiply the matrix by: " << Qt::endl;
             in >> n;
             Matrix temp(1, 1, 0);
             temp = currentMatrix * n;
-            temp.print();
+            out << "  ------------Result------------" << Qt::endl;
+            out << temp;
         }
-        case 11: {
+        case 12: {
             out << Qt::endl;
             if(currentMatrix.getCols() > 1) {
                 out << "Enter " << currentMatrix.getCols() << " elements of vector: " << Qt::endl;
@@ -129,7 +145,8 @@ int main(int argc, char *argv[])
                 }
                 Matrix temp(1, 1, 0);
                 temp = currentMatrix * v1;
-                temp.print();
+                out << "  ------------Result------------" << Qt::endl;
+                out << temp;
             } else {
                 out << "Enter " << currentMatrix.getRows() << " elements of vector: " << Qt::endl;
                 Vector v1(currentMatrix.getRows(),0);
@@ -140,17 +157,47 @@ int main(int argc, char *argv[])
                 }
                 Matrix temp(1, 1, 0);
                 temp = currentMatrix * v1;
-                temp.print();
+                out << "  ------------Result------------" << Qt::endl;
+                out << temp;
             }
         }
-        case 12: {
+        case 13: {
             out << Qt::endl;
-            out << "Enter the matrix you want to sum with the current one: " << Qt::endl;
-            Matrix temp(currentMatrix.getCols(), currentMatrix.getRows(), 1);
+            out << "Enter the matrix to multiply the matrix by: " << Qt::endl;
+            Matrix temp(1, 1, 0);
             in >> temp;
-            temp = currentMatrix + temp;
+            temp = currentMatrix * temp;
             out << "  ------------Result------------" << Qt::endl;
-            temp.print();
+            out << temp;
+        }
+        case 14: {
+            out << Qt::endl;
+            out << "We need to get the inverse to the next matrix: " << Qt::endl;
+            Matrix temp(3, 3, 0);
+            temp.setVal(1.1,0,0);
+            temp.setVal(1.4,0,1);
+            temp.setVal(1.5,0,2);
+            temp.setVal(2.1,1,0);
+            temp.setVal(3.2,1,1);
+            temp.setVal(2.3,1,2);
+            temp.setVal(3.1,2,0);
+            temp.setVal(3.2,2,1);
+            temp.setVal(3.3,2,2);
+            out << temp;
+            out << "Get the inverse of a matrix:" << Qt::endl;
+            Matrix tempInv(3, 3, 0);
+            tempInv = temp.reverse();
+            out << tempInv;
+            out << "Make a check:" << Qt::endl;
+            out << "Multiply the original by the reverse:" << Qt::endl;
+            Matrix resultM(3, 3, 0);
+            resultM = temp * tempInv;
+            out << "  ------------Result------------" << Qt::endl;
+            out << resultM;
+            out << "And vice versa:" << Qt::endl;
+            resultM = tempInv * temp;
+            out << "  ------------Result------------" << Qt::endl;
+            out << resultM;
         }
         }
 

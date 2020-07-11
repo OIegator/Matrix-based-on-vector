@@ -229,10 +229,14 @@ Matrix Matrix::operator*(const Matrix &m){
     Matrix c(rows,cols, 0);
     for (int i=0; i<rows; i++)
         for (int j=0; j<cols; j++){
-            int s=0;
+            double s = 0;
             for (int k=0; k<cols; k++)
                s+=v[i][k]*m.v[k][j];
-            c.v[i].setVal(j,s);
+            if(abs(s) < 1E-10) {
+                c.v[i].setVal(j,0);
+            } else {
+                c.v[i].setVal(j,s);
+            }
         }
     return c;
 }
