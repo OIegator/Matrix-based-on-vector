@@ -23,7 +23,6 @@ public:
     Matrix smallermatr(int cols, int rows);
     Matrix trans();
 
-    double deter();
     int minor(int x,int y);
     void print();
     void setVal(double value, int col, int row);
@@ -49,6 +48,16 @@ public:
     friend QTextStream& operator>> (QTextStream &is, Matrix &m);
     friend QTextStream& operator<< (QTextStream &os, Matrix &m);
 
+};
+
+class MatrixException
+{
+private:
+    QString mtr_err;
+public:
+    MatrixException(QString error) : mtr_err(error) { }
+
+    const QString getError() { return mtr_err; }
 };
 
 #endif // MATRIX_H

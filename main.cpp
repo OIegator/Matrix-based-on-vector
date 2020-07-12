@@ -6,6 +6,7 @@
 
 QTextStream out(stdout);
 QTextStream in(stdin);
+QTextStream err(stderr);
 
 void printMenu() {
     system("cls");
@@ -93,7 +94,12 @@ int main(int argc, char *argv[])
             break;
         case 6:
             out << Qt::endl;
-            out << "Determimant: " << currentMatrix.det(currentMatrix.getCols()) << Qt::endl;
+            try {
+                out << "Determimant: " << currentMatrix.det(currentMatrix.getCols()) << Qt::endl;
+            } catch (MatrixException &exception) {
+                err << "An matrix exception occurred (" << exception.getError() << ")" << Qt::endl;
+                out << "Change current matrix and try again." << Qt::endl;
+            }
             break;
         case 7: {
             out << Qt::endl;
@@ -104,26 +110,43 @@ int main(int argc, char *argv[])
             break;
         case 8:
             out << Qt::endl;
-            currentMatrix.reverse().print();
+            try {
+                currentMatrix.reverse().print();
+            } catch (MatrixException &exception) {
+                err << "An matrix exception occurred (" << exception.getError() << ")" << Qt::endl;
+                out << "Change current matrix and try again." << Qt::endl;
+            }
             break;
         case 9: {
             out << Qt::endl;
             out << "Enter the matrix you want to sum with the current one: " << Qt::endl;
             Matrix temp(currentMatrix.getCols(), currentMatrix.getRows(), 1);
             in >> temp;
-            temp = currentMatrix + temp;
-            out << "  ------------Result------------" << Qt::endl;
-            temp.print();
+            try {
+                temp = currentMatrix + temp;
+                out << "  ------------Result------------" << Qt::endl;
+                temp.print();
+            } catch (MatrixException &exception) {
+                err << "An matrix exception occurred (" << exception.getError() << ")" << Qt::endl;
+                out << "Change matrix you want to sum with the current one and try again." << Qt::endl;
+            }
         }
+            break;
         case 10: {
             out << Qt::endl;
             out << "Enter the matrix you want to subtract from the current one: " << Qt::endl;
             Matrix temp(currentMatrix.getCols(), currentMatrix.getRows(), 1);
             in >> temp;
-            temp = currentMatrix - temp;
-            out << "  ------------Result------------" << Qt::endl;
-            temp.print();
+            try {
+                temp = currentMatrix - temp;
+                out << "  ------------Result------------" << Qt::endl;
+                temp.print();
+            } catch (MatrixException &exception) {
+                err << "An matrix exception occurred (" << exception.getError() << ")" << Qt::endl;
+                out << "Change matrix you want to subtract from with the current one and try again." << Qt::endl;
+            }
         }
+            break;
         case 11: {
             out << Qt::endl;
             out << "Enter the number to multiply the matrix by: " << Qt::endl;
@@ -133,6 +156,7 @@ int main(int argc, char *argv[])
             out << "  ------------Result------------" << Qt::endl;
             out << temp;
         }
+            break;
         case 12: {
             out << Qt::endl;
             if(currentMatrix.getCols() > 1) {
@@ -144,9 +168,14 @@ int main(int argc, char *argv[])
                     v1.setVal(i, s.toDouble());
                 }
                 Matrix temp(1, 1, 0);
-                temp = currentMatrix * v1;
-                out << "  ------------Result------------" << Qt::endl;
-                out << temp;
+                try {
+                    temp = currentMatrix * v1;
+                    out << "  ------------Result------------" << Qt::endl;
+                    out << temp;
+                } catch (MatrixException &exception) {
+                    err << "An matrix exception occurred (" << exception.getError() << ")" << Qt::endl;
+                    out << "Change vector dimension you want to multiplie and try again." << Qt::endl;
+                }
             } else {
                 out << "Enter " << currentMatrix.getRows() << " elements of vector: " << Qt::endl;
                 Vector v1(currentMatrix.getRows(),0);
@@ -156,20 +185,32 @@ int main(int argc, char *argv[])
                     v1.setVal(i, s.toDouble());
                 }
                 Matrix temp(1, 1, 0);
-                temp = currentMatrix * v1;
-                out << "  ------------Result------------" << Qt::endl;
-                out << temp;
+                try {
+                    temp = currentMatrix * v1;
+                    out << "  ------------Result------------" << Qt::endl;
+                    out << temp;
+                } catch (MatrixException &exception) {
+                    err << "An matrix exception occurred (" << exception.getError() << ")" << Qt::endl;
+                    out << "Change vector dimension you want to multiplie and try again." << Qt::endl;
+                }
             }
+            break;
         }
         case 13: {
             out << Qt::endl;
             out << "Enter the matrix to multiply the matrix by: " << Qt::endl;
             Matrix temp(1, 1, 0);
             in >> temp;
-            temp = currentMatrix * temp;
-            out << "  ------------Result------------" << Qt::endl;
-            out << temp;
+            try {
+                temp = currentMatrix * temp;
+                out << "  ------------Result------------" << Qt::endl;
+                out << temp;
+            } catch (MatrixException &exception) {
+                err << "An matrix exception occurred (" << exception.getError() << ")" << Qt::endl;
+                out << "Change matrix dimension you want to multiplie and try again." << Qt::endl;
+            }
         }
+            break;
         case 14: {
             out << Qt::endl;
             out << "We need to get the inverse to the next matrix: " << Qt::endl;
@@ -199,6 +240,7 @@ int main(int argc, char *argv[])
             out << "  ------------Result------------" << Qt::endl;
             out << resultM;
         }
+            break;
         }
 
         if(option != 0)
